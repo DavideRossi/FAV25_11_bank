@@ -56,7 +56,28 @@ class AccountTest {
 		verify(notificator, never()).notify(any(Account.class), anyString());
 		verify(remoteBankOperator, never()).transfer(eq(DEST_ACCOUNT), anyDouble());
 	}
-	
+
+	@Test
+	void testInvalidAccountTransfer() {
+		final String DEST_ACCOUNT = "XYZ123";
+		final double AMOUNT = 50.0;
+		final double BALANCE = 100.0;
+		Account account = Account.builder()
+				.setOwner("Superpippo")
+				.setPhoneNumber("1234")
+				.setEmail("super@pippo.com")
+				.setBalance(BALANCE).build();
+
+		Notificator notificator = mock(Notificator.class);
+		RemoteBankOperator remoteBankOperator = mock(RemoteBankOperator.class);
+		when(remoteBankOperator.transfer(eq(DEST_ACCOUNT), anyDouble())).thenReturn(false);
+
+		assertFalse(account.makeTransfer(DEST_ACCOUNT, AMOUNT, notificator, remoteBankOperator));
+		assertEquals(100.0, account.getBalance(), EPSILON);
+		verify(notificator).notify(any(Account.class), anyString());
+		verify(remoteBankOperator).transfer(eq(DEST_ACCOUNT), anyDouble());
+	}
+
 	@Test
 	void testAroundBalanceMakeTransfer() {
 		final String DEST_ACCOUNT = "XYZ123";

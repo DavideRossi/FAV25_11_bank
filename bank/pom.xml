@@ -10,6 +10,7 @@
 		<jupiter.version>5.9.1</jupiter.version>
 		<surefire.version>3.0.0-M7</surefire.version>
 		<mokito.version>4.11.0</mokito.version>
+		<pitest.version>1.10.4</pitest.version>
 	</properties>
 	<build>
 		<pluginManagement>
@@ -18,6 +19,32 @@
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-surefire-plugin</artifactId>
 					<version>${surefire.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.pitest</groupId>
+					<artifactId>pitest-maven</artifactId>
+					<version>${pitest.version}</version>
+					<configuration>
+						<targetClasses>
+							<param>it.fav.mod14.bank.Account</param>
+						</targetClasses>
+						<targetTests>
+							<param>it.fav.mod14.bank.AccountTest</param>
+						</targetTests>
+						<excludedMethods>
+							<param>get*</param>
+							<param>set*</param>
+							<param>toString</param>
+							<param>withdraw</param>
+						</excludedMethods>
+					</configuration>
+					<dependencies>
+						<dependency>
+							<groupId>org.pitest</groupId>
+							<artifactId>pitest-junit5-plugin</artifactId>
+							<version>1.1.1</version>
+						</dependency>
+					</dependencies>
 				</plugin>
 			</plugins>
 		</pluginManagement>
