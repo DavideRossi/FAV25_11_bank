@@ -11,7 +11,17 @@
 		<surefire.version>3.0.0-M7</surefire.version>
 		<mokito.version>4.11.0</mokito.version>
 		<pitest.version>1.10.4</pitest.version>
+		<spotbugs.plugin.version>4.7.3.0</spotbugs.plugin.version>
 	</properties>
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>com.github.spotbugs</groupId>
+				<artifactId>spotbugs-maven-plugin</artifactId>
+				<version>${spotbugs.plugin.version}</version>
+			</plugin>
+		</plugins>
+	</reporting>
 	<build>
 		<pluginManagement>
 			<plugins>
@@ -45,6 +55,11 @@
 							<version>1.1.1</version>
 						</dependency>
 					</dependencies>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-site-plugin</artifactId>
+					<version>3.12.0</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>
